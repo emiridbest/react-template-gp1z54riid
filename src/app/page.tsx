@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import AgentInterface from '@/components/AgentInterface';
+import AgentInterface from '../components/AgentInterface';
 
 const GridBackground = () => {
   return (

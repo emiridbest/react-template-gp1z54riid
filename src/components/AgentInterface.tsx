@@ -1,10 +1,10 @@
-import React, { useState, KeyboardEvent, useEffect, useRef } from 'react';
-import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { useState, KeyboardEvent, useEffect, useRef } from 'react';
+import { Card, CardHeader, CardTitle, CardContent } from './ui/card';
+import { Button } from './ui/button';
+import { Input } from './ui/input';
 import { Mic, Square, Play, PauseIcon, BookOpen } from 'lucide-react';
 import { ChatOpenAI } from '@langchain/openai';
-import { createChatModel } from '../pages/api/hyper-agent';
+import { createChatModel } from '../api/hyper-agent';
 import ReactMarkdown from "react-markdown";
 type MessageType = 'user' | 'agent' | 'error';
 type ChatMessage = {
@@ -152,21 +152,23 @@ const AgentInterface = () => {
   
   useEffect(() => {
     let mounted = true;
-
+  
     const initializeChat = async () => {
       try {
-        if (!hyperRef.current) {
+        if (!hyperRef.current && mounted) {
           hyperRef.current = createChatModel();
         }
       } catch (error) {
         console.error('Failed to initialize chat model:', error);
-        setMessages(prev => [...prev, {
-          type: 'error',
-          content: 'Failed to initialize chat. Please check configuration.'
-        }]);
+        if (mounted) {
+          setMessages(prev => [...prev, {
+            type: 'error', 
+            content: 'Failed to initialize chat. Please check configuration.'
+          }]);
+        }
       }
     };
-
+  
     initializeChat();
     return () => { mounted = false; };
   }, []);
@@ -258,8 +260,8 @@ const AgentInterface = () => {
         content: "Welcome to the learning mode! I'm here to help you understand Web3, blockchain technology, and investment strategies. What would you like to learn about?"
       }]);
     } else if (selectedMode === 'auto') {
-      const agentData = await initializeAgent();
-      startAutonomousMode(agentData.agent, agentData.config);
+      await initializeAgent();
+      startAutonomousMode();
     }
   };
 
@@ -271,7 +273,7 @@ const AgentInterface = () => {
 
 
 
-  const startAutonomousMode = async (agent: any, config: any) => {
+  const startAutonomousMode = async () => {
     setIsLoading(true);
 
     while (mode === 'auto') {

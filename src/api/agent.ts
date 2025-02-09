@@ -14,7 +14,6 @@ import { HumanMessage } from "@langchain/core/messages";
 import { MemorySaver } from "@langchain/langgraph";
 import { createReactAgent } from "@langchain/langgraph/prebuilt";
 import { ChatOpenAI } from "@langchain/openai";
-import * as fs from "fs";
 import * as readline from "readline";
 import { MongoClient } from 'mongodb'
 

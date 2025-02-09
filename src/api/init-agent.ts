@@ -1,10 +1,18 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+
+interface ApiRequest {
+  method: string;
+  body: any;
+}
+
+interface ApiResponse {
+  status: (code: number) => ApiResponse;
+  json: (data: any) => void;
+}
 import { initializeAgent } from './agent';
-import { AgentData } from 'components/ui/types/agent';
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<AgentData | { error: string }>
+  req: ApiRequest,
+  res: ApiResponse
 ) {
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Method not allowed' });
