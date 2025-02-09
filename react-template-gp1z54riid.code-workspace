@@ -1,0 +1,21 @@
+{
+	"folders": [
+		{
+			"name": "react-template-gp1z54riid",
+			"path": "."
+		},
+		{
+			"name": "app",
+			"path": "../DCAi/app"
+		},
+		{
+			"name": "components",
+			"path": "../DCAi/components"
+		},
+		{
+			"name": "api",
+			"path": "../DCAi/pages/api"
+		}
+	],
+	"settings": {}
+}

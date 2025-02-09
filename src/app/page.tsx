@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from 'react';
 import { ArrowRight } from 'lucide-react';
-import AgentInterface from '../components/AgentInterface';
+import AgentInterface from '@/components/AgentInterface';
 
 const GridBackground = () => {
   return (
@@ -18,7 +18,7 @@ const GridBackground = () => {
   );
 };
 
-const App = () => {
+const Home = () => {
   const [scrolled, setScrolled] = useState(false);
   const [isAgentOpen, setIsAgentOpen] = useState(false);
 
@@ -123,4 +123,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
