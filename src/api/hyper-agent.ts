@@ -3,13 +3,13 @@ import { ChatOpenAI } from '@langchain/openai';
 
 
 export const createChatModel = () => {
-  if (!process.env.NEXT_PUBLIC_HYPERBOLIC_API_KEY) {
-    throw new Error('NEXT_PUBLIC_HYPERBOLIC_API_KEY is not set');
+  if (!import.meta.env.VITE_HYPERBOLIC_API_KEY) {
+    throw new Error('VITE_HYPERBOLIC_API_KEY is not set');
   }
 
   return new ChatOpenAI({
     modelName: "meta-llama/Llama-3.3-70B-Instruct",
-    apiKey: process.env.NEXT_PUBLIC_HYPERBOLIC_API_KEY,
+    apiKey: import.meta.env.VITE_HYPERBOLIC_API_KEY,
     configuration: {
       baseURL: "https://api.hyperbolic.xyz/v1",
       defaultHeaders: {

@@ -6,6 +6,8 @@ import { Mic, Square, Play, PauseIcon, BookOpen } from 'lucide-react';
 import { ChatOpenAI } from '@langchain/openai';
 import { createChatModel } from '../api/hyper-agent';
 import ReactMarkdown from "react-markdown";
+
+
 type MessageType = 'user' | 'agent' | 'error';
 type ChatMessage = {
   type: MessageType;
@@ -34,7 +36,7 @@ const AgentInterface = () => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_HYPERBOLIC_API_KEY}`,
+          Authorization: `Bearer ${import.meta.env.VITE_HYPERBOLIC_API_KEY}`,
         },
         body: JSON.stringify({
           text: text,
@@ -75,7 +77,7 @@ const AgentInterface = () => {
           const response = await fetch('https://api.hyperbolic.xyz/v1/audio/transcription', {
             method: 'POST',
             headers: {
-              Authorization: `Bearer ${process.env.HYPERBOLIC_API_KEY}`,
+              Authorization: `Bearer ${import.meta.env.HYPERBOLIC_API_KEY}`,
             },
             body: formData
           });

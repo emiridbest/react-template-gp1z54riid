@@ -17,11 +17,12 @@ import { ChatOpenAI } from "@langchain/openai";
 import * as readline from "readline";
 import { MongoClient } from 'mongodb'
 
+
 const connectToDatabase = async () => {
-  if (!process.env.NEXT_PUBLIC_MONGODB_URI) {
+  if (!import.meta.env.VITE_MONGODB_URI) {
     throw new Error("MongoDB URI is not defined");
   }
-  const client = new MongoClient(process.env.NEXT_PUBLIC_MONGODB_URI);
+  const client = new MongoClient(import.meta.env.VITE_MONGODB_URI);
   await client.connect();
   return client;
 };
@@ -42,7 +43,7 @@ const saveWalletDataToMongoDB = async (walletData: any) => {
   await collection.insertOne(walletData);
   await client.close();
 };
-const OPENAI_API_KEY = process.env.NEXT_PUBLIC_OPENAI_API_KEY
+const OPENAI_API_KEY = import.meta.env.VITE_OPENAI_API_KEY
 /**
 * Validates that required environment variables are set
 *
@@ -53,9 +54,9 @@ function validateEnvironment(): void {
   const missingVars: string[] = [];
 
   // Check required variables
-  const requiredVars = ["NEXT_PUBLIC_OPENAI_API_KEY", "NEXT_PUBLIC_CDP_API_KEY_NAME", "NEXT_PUBLIC_CDP_API_KEY_PRIVATE_KEY"];
+  const requiredVars = ["VITE_OPENAI_API_KEY", "VITE_CDP_API_KEY_NAME", "VITE_CDP_API_KEY_PRIVATE_KEY"];
   requiredVars.forEach(varName => {
-    if (!process.env[varName]) {
+    if (!import.meta.env[varName]) {
       missingVars.push(varName);
     }
   });
@@ -70,7 +71,7 @@ function validateEnvironment(): void {
   }
 
   // Warn about optional NETWORK_ID
-  if (!process.env.NEXT_PUBLIC_NETWORK_ID) {
+  if (!import.meta.env.VITE_NETWORK_ID) {
     console.warn("Warning: NETWORK_ID not set, defaulting to base-sepolia testnet");
   }
 }
@@ -105,10 +106,10 @@ export async function initializeAgent() {
 
     // Configure CDP Wallet Provider
     const config = {
-      apiKeyName: process.env.NEXT_PUBLIC_CDP_API_KEY_NAME,
-      apiKeyPrivateKey: process.env.NEXT_PUBLIC_CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+      apiKeyName: import.meta.env.VITE_CDP_API_KEY_NAME,
+      apiKeyPrivateKey: import.meta.env.VITE_CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
       cdpWalletData: walletDataStr || undefined,
-      networkId: process.env.NEXT_PUBLIC_NETWORK_ID || "base-sepolia",
+      networkId: import.meta.env.VITE_NETWORK_ID || "base-sepolia",
     };
 
     const walletProvider = await CdpWalletProvider.configureWithWallet(config);
@@ -122,12 +123,12 @@ export async function initializeAgent() {
         walletActionProvider(),
         erc20ActionProvider(),
         cdpApiActionProvider({
-          apiKeyName: process.env.NEXT_PUBLIC_CDP_API_KEY_NAME,
-          apiKeyPrivateKey: process.env.NEXT_PUBLIC_CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+          apiKeyName: import.meta.env.VITE_CDP_API_KEY_NAME,
+          apiKeyPrivateKey: import.meta.env.VITE_CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
         }),
         cdpWalletActionProvider({
-          apiKeyName: process.env.NEXT_PUBLIC_CDP_API_KEY_NAME,
-          apiKeyPrivateKey: process.env.NEXT_PUBLIC_CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+          apiKeyName: import.meta.env.VITE_CDP_API_KEY_NAME,
+          apiKeyPrivateKey: import.meta.env.VITE_CDP_API_KEY_PRIVATE_KEY?.replace(/\\n/g, "\n"),
         }),
       ],
     });
