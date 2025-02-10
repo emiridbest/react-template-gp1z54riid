@@ -18,7 +18,7 @@ DCAi is an innovative AI agent built during ETHGlobal. It leverages Coinbase Age
 - Base mainnet and sepoila
 - EigenLayer => hyperbolic
 - Opsec frontend  from https://github.com/emiridbest/react-template-gp1z54riid
-- NextJs for AgentKit frontend
+- NextJs for AgentKit [frontend](https://dc-ai.vercel.app/)
 - Vite for Opsec [frontend](https://bafybeidfs7lxougbu5odkwufuqfezuskvzkiakf7vlppk5rcdqtp4chk4i.ipfs.dweb.link/)
 - Web3 Technologies
 
